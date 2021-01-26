@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Main {
 
 	public static void main(String[] args) {
-		
+		// Fase 1
 		// 1
 		List<String> nomsPropis = Arrays.asList("Anna", "Olga", "Ada", "Andreu", "Albert", "Pau");
 		System.out.println("1.");
@@ -37,6 +37,10 @@ public class Main {
 		System.out.println("6.");
 		mesos.forEach(System.out::println);
 		
+		// Fase2
+		System.out.println("Fase 2");
+		FunInter pi = () -> 3.1415;
+		System.out.println(pi.getPiValue());		
 	}
 	// Retorna els noms que comencen per "A" i tenen 3 lletres
 	public static List<String> filtraNoms(List<String> llistaNoms) {
@@ -78,4 +82,10 @@ public class Main {
 					.collect(Collectors.toList());
 		return paraules5;
 	}
+	
+}
+// Functional Interface amb el mètode abstracte getPiValue()
+@FunctionalInterface
+interface FunInter {
+	public double getPiValue();
 }
