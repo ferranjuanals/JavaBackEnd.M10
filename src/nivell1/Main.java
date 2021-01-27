@@ -3,7 +3,7 @@ package nivell1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class Main {
 
@@ -37,10 +37,15 @@ public class Main {
 		System.out.println("6.");
 		mesos.forEach(System.out::println);
 		
-		// Fase2
+		// Fase 2
 		System.out.println("Fase 2");
 		FunInter pi = () -> 3.1415;
-		System.out.println(pi.getPiValue());		
+		System.out.println(pi.getPiValue());	
+		
+		// Fase 3
+		System.out.println("Fase 3");
+		Rev rev = s -> new StringBuilder(s).reverse().toString();
+		System.out.println(rev.reverse("String"));
 	}
 	// Retorna els noms que comencen per "A" i tenen 3 lletres
 	public static List<String> filtraNoms(List<String> llistaNoms) {
@@ -88,4 +93,9 @@ public class Main {
 @FunctionalInterface
 interface FunInter {
 	public double getPiValue();
+}
+// Functional Interface amb el mètode abstracte reverse()
+@FunctionalInterface
+interface Rev {
+	public String reverse(String string);
 }
