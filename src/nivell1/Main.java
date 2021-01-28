@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.*;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -46,6 +47,52 @@ public class Main {
 		System.out.println("Fase 3");
 		Rev rev = s -> new StringBuilder(s).reverse().toString();
 		System.out.println(rev.reverse("String"));
+		
+		// Nivell 3
+		System.out.println("Nivell 3");
+		// Crear la llista d'alumnes i omplir-la
+		List<Alumne> alumnes = new ArrayList<Alumne>();
+		alumnes.add(new Alumne("Joan", 34, "JAVA", 7));
+		alumnes.add(new Alumne("Manel", 26, "JAVASCRIPT", 4));
+		alumnes.add(new Alumne("Maria", 46, "PYTHON", 8));
+		alumnes.add(new Alumne("Andrea", 21, "JAVA", 9));
+		alumnes.add(new Alumne("Antoni", 29, "PHP", 7));
+		alumnes.add(new Alumne("Silvia", 35, "PYTHON", 7));
+		alumnes.add(new Alumne("Ernest", 58, "PHP", 3));
+		alumnes.add(new Alumne("Marta", 34, "JAVA", 5));
+		alumnes.add(new Alumne("Carles", 28, "JAVASCRIPT", 6));
+		alumnes.add(new Alumne("Anna", 42, "JAVA", 4));
+		
+		// Mostrar nom i edat de cada alumne
+		System.out.println("1.");
+		alumnes.stream()
+			.forEach(a -> System.out.println("Nom: " + a.getNom() + ", Edat: " + a.getEdat()));
+		
+		// Mostrar els alumnes que el nom comenci per "A" en una nova llista
+		System.out.println("2.");
+		List<Alumne> alumnesA = new ArrayList<Alumne>();
+		alumnes.stream()
+			.filter(a -> a.getNom().startsWith("A"))
+			.peek(b -> alumnesA.add(b))
+			.forEach(c -> System.out.println(c));
+		
+		// Mostra els alumnes que tinguin una nota més gran de 5
+		System.out.println("3.");
+		alumnes.stream()
+			.filter(a -> a.getNota() >= 5)
+			.forEach(System.out::println);
+		
+		// Mostra els alumnes que tinguin una nota més gran de 5 i no siguin "PHP"
+		System.out.println("4.");
+		alumnes.stream()
+			.filter(a -> a.getNota() >= 5 & !a.getCurs().equals("PHP"))
+			.forEach(System.out::println);
+		
+		// Mostra els alumnes que facin "JAVA" i siguin majors d'edat
+		System.out.println("5.");
+		alumnes.stream()
+			.filter(a -> a.getCurs().equals("JAVA") & a.getEdat() > 18)
+			.forEach(System.out::println);
 	}
 	// Retorna els noms que comencen per "A" i tenen 3 lletres
 	public static List<String> filtraNoms(List<String> llistaNoms) {
