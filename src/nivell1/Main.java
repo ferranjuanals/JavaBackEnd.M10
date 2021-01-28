@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.*;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -30,7 +31,7 @@ public class Main {
 		System.out.println(paraules5(paraules));
 		
 		// 5
-		List<String> mesos = Arrays.asList("Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre");
+		List<String> mesos = Arrays.asList("Gener", "Febrer", "MarÃ§", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre");
 		System.out.println("5.");
 		mesos.forEach(s -> System.out.println(s));
 		
@@ -50,21 +51,21 @@ public class Main {
 		
 		// Nivell 2
 		System.out.println("Nivell 2");
-		String[] lletresNumeros = {"efectivament", "aquest", "2021", "no", "serà", "diferent", "al", "2020"};
+		String[] lletresNumeros = {"efectivament", "aquest", "2021", "no", "serÃ ", "diferent", "al", "2020"};
 
-		// Ordenar per el número de lletres en ordre ascendent
+		// Ordenar per el nÃºmero de lletres en ordre ascendent
 		System.out.println("1.");
 		Arrays.stream(lletresNumeros)
 			.sorted(Comparator.comparingInt(String::length))
 			.forEach(System.out::println);
 
-		// Ordenar per el número de lletres en ordre descendent
+		// Ordenar per el nÃºmero de lletres en ordre descendent
 		System.out.println("2.");
 		Arrays.stream(lletresNumeros)
 			.sorted(Comparator.comparingInt(String::length).reversed())
 			.forEach(System.out::println);
 
-		// Ordenar pel primer caràcter
+		// Ordenar pel primer carÃ cter
 		System.out.println("3.");
 		Arrays.stream(lletresNumeros)
 			.sorted(Comparator.comparing(s -> s.charAt(0)))
@@ -76,18 +77,18 @@ public class Main {
 			.sorted(Comparator.comparingInt(s -> (s.contains("E") | s.contains("e") ? 0:1)))
 			.forEach(System.out::println);
 
-		// Modificar les cadenes canviant el caràcter "a" per "4"
+		// Modificar les cadenes canviant el carÃ cter "a" per "4"
 		System.out.println("5.");
 		Arrays.stream(lletresNumeros)
 			.forEach(s -> System.out.println(s.replaceAll("a", "4")));
 
-		// Mostra les cadenes que siguin numèriques
+		// Mostra les cadenes que siguin numÃ¨riques
 		System.out.println("6.");
 		Arrays.stream(lletresNumeros)
 			.filter(s -> s.chars().allMatch(Character::isDigit))
 			.forEach(System.out::println);
 		
-		// 
+		// Injecta a la interfÃ­cie amb una lambda el cos del mÃ¨tode per poder transformar la operaciÃ³ en suma, resta, multiplicaciÃ³ i divisiÃ³
 		System.out.println("7.");
 		Ope ope = (s, i1, i2) -> {
 			if(s.equals("suma")) {
@@ -99,13 +100,57 @@ public class Main {
 			}else if(s.equals("divisio")) {
 				return i1 / i2;
 			}else {
-				System.out.println("La operació no s'ha dut a terme");
+				System.out.println("La operaciÃ³ no s'ha dut a terme");
 				return 0;
 			}
 		};
-		Ope suma = (s, i1, i2) -> i1 + i2;
-		System.out.println(suma.operacio("sumas", 3, 8));
 		System.out.println(ope.operacio("suma", 3, 8));
+    
+// Nivell 3
+		System.out.println("Nivell 3");
+		// Crear la llista d'alumnes i omplir-la
+		List<Alumne> alumnes = new ArrayList<Alumne>();
+		alumnes.add(new Alumne("Joan", 34, "JAVA", 7));
+		alumnes.add(new Alumne("Manel", 26, "JAVASCRIPT", 4));
+		alumnes.add(new Alumne("Maria", 46, "PYTHON", 8));
+		alumnes.add(new Alumne("Andrea", 21, "JAVA", 9));
+		alumnes.add(new Alumne("Antoni", 29, "PHP", 7));
+		alumnes.add(new Alumne("Silvia", 35, "PYTHON", 7));
+		alumnes.add(new Alumne("Ernest", 58, "PHP", 3));
+		alumnes.add(new Alumne("Marta", 34, "JAVA", 5));
+		alumnes.add(new Alumne("Carles", 28, "JAVASCRIPT", 6));
+		alumnes.add(new Alumne("Anna", 42, "JAVA", 4));
+		
+		// Mostrar nom i edat de cada alumne
+		System.out.println("1.");
+		alumnes.stream()
+			.forEach(a -> System.out.println("Nom: " + a.getNom() + ", Edat: " + a.getEdat()));
+		
+		// Mostrar els alumnes que el nom comenci per "A" en una nova llista
+		System.out.println("2.");
+		List<Alumne> alumnesA = new ArrayList<Alumne>();
+		alumnes.stream()
+			.filter(a -> a.getNom().startsWith("A"))
+			.peek(b -> alumnesA.add(b))
+			.forEach(c -> System.out.println(c));
+		
+		// Mostra els alumnes que tinguin una nota mÃ©s gran de 5
+		System.out.println("3.");
+		alumnes.stream()
+			.filter(a -> a.getNota() >= 5)
+			.forEach(System.out::println);
+		
+		// Mostra els alumnes que tinguin una nota mÃ©s gran de 5 i no siguin "PHP"
+		System.out.println("4.");
+		alumnes.stream()
+			.filter(a -> a.getNota() >= 5 & !a.getCurs().equals("PHP"))
+			.forEach(System.out::println);
+		
+		// Mostra els alumnes que facin "JAVA" i siguin majors d'edat
+		System.out.println("5.");
+		alumnes.stream()
+			.filter(a -> a.getCurs().equals("JAVA") & a.getEdat() > 18)
+			.forEach(System.out::println);
 	}
 	// Retorna els noms que comencen per "A" i tenen 3 lletres
 	public static List<String> filtraNoms(List<String> llistaNoms) {
@@ -115,7 +160,7 @@ public class Main {
 					.collect(Collectors.toList());		
 		return llista;
 	}
-	// Retorna un String amb els números parells precedits de "e" i els imparells de "o"
+	// Retorna un String amb els nÃºmeros parells precedits de "e" i els imparells de "o"
 	public static String parellsImparells(List<Integer> numeros) {
 		List<String> llistas = new ArrayList<>();		
 		numeros.stream()
@@ -139,7 +184,7 @@ public class Main {
 					.collect(Collectors.toList());		
 		return paraulesO;
 	}
-	// Retorna les paraules de més de 5 lletres en una llista
+	// Retorna les paraules de mÃ©s de 5 lletres en una llista
 	public static List<String> paraules5(List<String> paraules) {
 		List<String> paraules5 =
 				paraules.stream()
@@ -149,17 +194,17 @@ public class Main {
 	}
 	
 }
-// Functional Interface amb el mètode abstracte getPiValue()
+// Functional Interface amb el mÃ¨tode abstracte getPiValue()
 @FunctionalInterface
 interface FunInter {
 	public double getPiValue();
 }
-// Functional Interface amb el mètode abstracte reverse()
+// Functional Interface amb el mÃ¨tode abstracte reverse()
 @FunctionalInterface
 interface Rev {
 	public String reverse(String string);
 }
-// Functional Interface amb el mètode abstracte operacio()
+// Functional Interface amb el mÃ¨tode abstracte operacio()
 @FunctionalInterface
 interface Ope {
 	public float operacio(String string, float int1, float int2);
