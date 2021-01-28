@@ -106,7 +106,7 @@ public class Main {
 		};
 		System.out.println(ope.operacio("suma", 3, 8));
     
-// Nivell 3
+		// Nivell 3
 		System.out.println("Nivell 3");
 		// Crear la llista d'alumnes i omplir-la
 		List<Alumne> alumnes = new ArrayList<Alumne>();
