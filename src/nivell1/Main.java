@@ -2,6 +2,7 @@ package nivell1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.*;
 
@@ -46,6 +47,65 @@ public class Main {
 		System.out.println("Fase 3");
 		Rev rev = s -> new StringBuilder(s).reverse().toString();
 		System.out.println(rev.reverse("String"));
+		
+		// Nivell 2
+		System.out.println("Nivell 2");
+		String[] lletresNumeros = {"efectivament", "aquest", "2021", "no", "serà", "diferent", "al", "2020"};
+
+		// Ordenar per el número de lletres en ordre ascendent
+		System.out.println("1.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(String::length))
+			.forEach(System.out::println);
+
+		// Ordenar per el número de lletres en ordre descendent
+		System.out.println("2.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(String::length).reversed())
+			.forEach(System.out::println);
+
+		// Ordenar pel primer caràcter
+		System.out.println("3.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparing(s -> s.charAt(0)))
+			.forEach(System.out::println);
+
+		// Ordenar les cadenes que contenen 'e' primer
+		System.out.println("4.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(s -> (s.contains("E") | s.contains("e") ? 0:1)))
+			.forEach(System.out::println);
+
+		// Modificar les cadenes canviant el caràcter "a" per "4"
+		System.out.println("5.");
+		Arrays.stream(lletresNumeros)
+			.forEach(s -> System.out.println(s.replaceAll("a", "4")));
+
+		// Mostra les cadenes que siguin numèriques
+		System.out.println("6.");
+		Arrays.stream(lletresNumeros)
+			.filter(s -> s.chars().allMatch(Character::isDigit))
+			.forEach(System.out::println);
+		
+		// 
+		System.out.println("7.");
+		Ope ope = (s, i1, i2) -> {
+			if(s.equals("suma")) {
+				return i1 + i2;
+			}else if(s.equals("resta")) {
+				return i1 - i2;
+			}else if(s.equals("multiplicacio")) {
+				return i1 * i2;
+			}else if(s.equals("divisio")) {
+				return i1 / i2;
+			}else {
+				System.out.println("La operació no s'ha dut a terme");
+				return 0;
+			}
+		};
+		Ope suma = (s, i1, i2) -> i1 + i2;
+		System.out.println(suma.operacio("sumas", 3, 8));
+		System.out.println(ope.operacio("suma", 3, 8));
 	}
 	// Retorna els noms que comencen per "A" i tenen 3 lletres
 	public static List<String> filtraNoms(List<String> llistaNoms) {
@@ -98,4 +158,9 @@ interface FunInter {
 @FunctionalInterface
 interface Rev {
 	public String reverse(String string);
+}
+// Functional Interface amb el mètode abstracte operacio()
+@FunctionalInterface
+interface Ope {
+	public float operacio(String string, float int1, float int2);
 }
