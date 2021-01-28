@@ -2,6 +2,7 @@ package nivell1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.*;
 
@@ -30,7 +31,7 @@ public class Main {
 		System.out.println(paraules5(paraules));
 		
 		// 5
-		List<String> mesos = Arrays.asList("Gener", "Febrer", "Mar�", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre");
+		List<String> mesos = Arrays.asList("Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre");
 		System.out.println("5.");
 		mesos.forEach(s -> System.out.println(s));
 		
@@ -48,7 +49,64 @@ public class Main {
 		Rev rev = s -> new StringBuilder(s).reverse().toString();
 		System.out.println(rev.reverse("String"));
 		
-		// Nivell 3
+		// Nivell 2
+		System.out.println("Nivell 2");
+		String[] lletresNumeros = {"efectivament", "aquest", "2021", "no", "serà", "diferent", "al", "2020"};
+
+		// Ordenar per el número de lletres en ordre ascendent
+		System.out.println("1.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(String::length))
+			.forEach(System.out::println);
+
+		// Ordenar per el número de lletres en ordre descendent
+		System.out.println("2.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(String::length).reversed())
+			.forEach(System.out::println);
+
+		// Ordenar pel primer caràcter
+		System.out.println("3.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparing(s -> s.charAt(0)))
+			.forEach(System.out::println);
+
+		// Ordenar les cadenes que contenen 'e' primer
+		System.out.println("4.");
+		Arrays.stream(lletresNumeros)
+			.sorted(Comparator.comparingInt(s -> (s.contains("E") | s.contains("e") ? 0:1)))
+			.forEach(System.out::println);
+
+		// Modificar les cadenes canviant el caràcter "a" per "4"
+		System.out.println("5.");
+		Arrays.stream(lletresNumeros)
+			.forEach(s -> System.out.println(s.replaceAll("a", "4")));
+
+		// Mostra les cadenes que siguin numèriques
+		System.out.println("6.");
+		Arrays.stream(lletresNumeros)
+			.filter(s -> s.chars().allMatch(Character::isDigit))
+			.forEach(System.out::println);
+		
+		// Injecta a la interfície amb una lambda el cos del mètode per poder transformar la operació en suma, resta, multiplicació i divisió
+		System.out.println("7.");
+		Ope ope = (s, i1, i2) -> {
+			if(s.equals("suma")) {
+				return i1 + i2;
+			}else if(s.equals("resta")) {
+				return i1 - i2;
+			}else if(s.equals("multiplicacio")) {
+				return i1 * i2;
+			}else if(s.equals("divisio")) {
+				return i1 / i2;
+			}else {
+				System.out.println("La operació no s'ha dut a terme");
+				return 0;
+			}
+		};
+		System.out.println(ope.operacio("suma", 3, 8));
+    
+// Nivell 3
 		System.out.println("Nivell 3");
 		// Crear la llista d'alumnes i omplir-la
 		List<Alumne> alumnes = new ArrayList<Alumne>();
@@ -76,13 +134,13 @@ public class Main {
 			.peek(b -> alumnesA.add(b))
 			.forEach(c -> System.out.println(c));
 		
-		// Mostra els alumnes que tinguin una nota m�s gran de 5
+		// Mostra els alumnes que tinguin una nota més gran de 5
 		System.out.println("3.");
 		alumnes.stream()
 			.filter(a -> a.getNota() >= 5)
 			.forEach(System.out::println);
 		
-		// Mostra els alumnes que tinguin una nota m�s gran de 5 i no siguin "PHP"
+		// Mostra els alumnes que tinguin una nota més gran de 5 i no siguin "PHP"
 		System.out.println("4.");
 		alumnes.stream()
 			.filter(a -> a.getNota() >= 5 & !a.getCurs().equals("PHP"))
@@ -102,7 +160,7 @@ public class Main {
 					.collect(Collectors.toList());		
 		return llista;
 	}
-	// Retorna un String amb els n�meros parells precedits de "e" i els imparells de "o"
+	// Retorna un String amb els números parells precedits de "e" i els imparells de "o"
 	public static String parellsImparells(List<Integer> numeros) {
 		List<String> llistas = new ArrayList<>();		
 		numeros.stream()
@@ -126,7 +184,7 @@ public class Main {
 					.collect(Collectors.toList());		
 		return paraulesO;
 	}
-	// Retorna les paraules de m�s de 5 lletres en una llista
+	// Retorna les paraules de més de 5 lletres en una llista
 	public static List<String> paraules5(List<String> paraules) {
 		List<String> paraules5 =
 				paraules.stream()
@@ -136,13 +194,18 @@ public class Main {
 	}
 	
 }
-// Functional Interface amb el m�tode abstracte getPiValue()
+// Functional Interface amb el mètode abstracte getPiValue()
 @FunctionalInterface
 interface FunInter {
 	public double getPiValue();
 }
-// Functional Interface amb el m�tode abstracte reverse()
+// Functional Interface amb el mètode abstracte reverse()
 @FunctionalInterface
 interface Rev {
 	public String reverse(String string);
+}
+// Functional Interface amb el mètode abstracte operacio()
+@FunctionalInterface
+interface Ope {
+	public float operacio(String string, float int1, float int2);
 }
